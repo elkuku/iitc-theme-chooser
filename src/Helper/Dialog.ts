@@ -16,7 +16,6 @@ export class DialogHelper {
     ) {}
 
     public getDialog(): JQuery {
-        console.log(this.themes)
         this.handlebars = window.plugin.HelperHandlebars
 
         if (!this.handlebars) {
