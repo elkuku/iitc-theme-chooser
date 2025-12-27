@@ -72,6 +72,7 @@ class ThemeChooser implements Plugin.Class {
 
     private createButtons(): void {
         IITC.toolbox.addButton({
+            id: `btn-${PLUGIN_NAME}`,
             label: 'xThemes',
             action: this.showDialog,
             title: 'Select a theme [t]',
