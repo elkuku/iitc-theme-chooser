@@ -1,5 +1,5 @@
 // @ts-ignore
-import themes from '../../dist/themes.json'
+import themes from '../../themes/themes.json'
 
 export interface Theme {
     name: string,

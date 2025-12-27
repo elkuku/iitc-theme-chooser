@@ -20,6 +20,27 @@ jobs:
       - name: Run custom build
         run: node .github/scripts/build.js
 
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          cache: 'yarn'
+
+      - name: Install dependencies
+        run: yarn install --immutable --frozen-lockfile
+
+      - name: Run build
+        run: yarn build:prod
+
+      - name: Create Release and Upload Assets
+        uses: softprops/action-gh-release@v1
+        with:
+          files: dist/*
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Setup GitHub page
         run: node .github/scripts/setup-github-page.js
 
