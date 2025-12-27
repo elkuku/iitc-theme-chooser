@@ -1,13 +1,8 @@
-name: Build
-
-permissions:
-  contents: write
-  pages: write
-  id-token: write
-
+name: release.yml
 on:
   push:
-  workflow_dispatch:
+    tags:
+      - 'v*' # Trigger this workflow when a tag starting with 'v' is pushed
 
 jobs:
   build:
@@ -32,18 +27,11 @@ jobs:
       - name: Run build
         run: yarn build:prod
 
-      - name: Setup GitHub page
-        run: node .github/scripts/setup-github-page.js
-
-      - name: Upload build artifact to pages
-        uses: actions/upload-pages-artifact@v3
+      - name: Create Release and Upload Assets
+        uses: softprops/action-gh-release@v1
         with:
-          path: gh_page
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Deploy to GitHub Pages
-        uses: actions/deploy-pages@v4
+          files: dist/*
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
