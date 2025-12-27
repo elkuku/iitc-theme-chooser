@@ -1,0 +1,19 @@
+<div id="menuTabThemes">
+    Welcome {{playerName}}!<br>
+    Choose theme that you like
+    <fieldset>
+        <legend>Available themes</legend>
+        {{#each themes}}
+            <div>
+                <label>
+                    <input type="radio" name="theme"
+                           onchange="{{../plugin}}.activateTheme('{{@key}}')"
+                           {{#if_eq @key ../activeTheme}}checked{{/if_eq}}
+                    />
+                    <img style="width:100px" src="{{this.preview}}" alt="Preview">
+                    {{this.name}}
+                </label>
+            </div>
+        {{/each}}
+    </fieldset>
+</div>
