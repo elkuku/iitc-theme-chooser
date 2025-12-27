@@ -1,0 +1,10 @@
+{
+  "name": "IITC plugin: Iitc-Theme-Chooser",
+  "id": "iitc_plugin_IitcThemeChooser",
+  "category": "Misc",
+  "description": "A theme chooser for IITC",
+  "author": "Falenone | xMAXIMx | elkuku",
+  "entry": "src/Main.ts",
+  "minimize": false,
+  "changelog": ""
+}
