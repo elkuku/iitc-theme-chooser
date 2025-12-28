@@ -1,6 +1,6 @@
 import fs from 'fs'
 
-if (!fs.existsSync('dist')) fs.mkdirSync('dist')
+if (!fs.existsSync('build')) fs.mkdirSync('build')
 
 const themes = fs.readdirSync('themes', {withFileTypes: true})
     .filter(dirent => dirent.isDirectory())
@@ -29,6 +29,6 @@ themes.forEach(theme => {
 })
 
 fs.writeFileSync(
-    'themes/themes.json',
+    'build/themes.json',
     JSON.stringify(themesList, null, 2),
 )

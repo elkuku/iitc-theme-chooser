@@ -1,3 +1,4 @@
 /node_modules/
 /dist/
-/themes/themes.json
+/build/
+/gh_page/

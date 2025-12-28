@@ -12,8 +12,8 @@ const formattedDate = `${day}-${month}-${year}`;
 fs.rmSync('gh_page', { recursive: true, force: true });
 fs.mkdirSync('gh_page', { recursive: true });
 
+fs.cpSync('github_page', 'gh_page', { recursive: true });
 fs.cpSync('dist', 'gh_page/files', { recursive: true });
-fs.cpSync('.github/page', 'gh_page', { recursive: true });
 
 const fileNames = fs
     .readdirSync('dist', { withFileTypes: true })
