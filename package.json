@@ -8,6 +8,8 @@
     "build": "yarn build:dev",
     "build:dev": "yarn ipk build:dev",
     "build:prod": "yarn ipk build:prod",
+    "build:themes": "node scripts/create-themes-file.js",
+    "build:all": "yarn build:themes && yarn ipk build:prod",
     "start": "yarn ipk fileserver",
     "autobuild": "yarn ipk autobuild"
   },

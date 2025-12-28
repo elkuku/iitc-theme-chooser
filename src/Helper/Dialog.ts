@@ -26,7 +26,7 @@ export class DialogHelper {
         // @ts-expect-error 'howtodeclaretypes?'
         this.handlebars.registerHelper({
             if_eq:(arg1:string, arg2:string, options: Handlebars.HelperOptions) => {
-                return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
+                return (arg1 === arg2) ? options.fn(this) : options.inverse(this);
             }
         })
 

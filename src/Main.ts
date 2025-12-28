@@ -34,7 +34,6 @@ class ThemeChooser implements Plugin.Class {
             this.settings = JSON.parse(settings)
         }
 
-
         this.themeProvider = new ThemeProvider()
         this.dialogHelper = new DialogHelper(PLUGIN_NAME, 'Theme Chooser', this.settings.theme, this.themeProvider.getList())
 
