@@ -1,8 +1,7 @@
 // @ts-expect-error "Import attributes are only supported when the --module option is set to esnext, nodenext, or preserve"
 import dialogTemplate from '../tpl/dialog.hbs' with {type: 'text'}
 
-import {Theme} from "./ThemeProvider";
-import {HelperHandlebars} from "../../types/Types";
+import {HelperHandlebars, Theme} from "../../types/Types";
 
 export class DialogHelper {
 

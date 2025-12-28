@@ -3,11 +3,7 @@
 // @ts-ignore
 import themes from '../../build/themes.json'
 
-export interface Theme {
-    name: string,
-    css: string,
-    preview: string,
-}
+import {Theme} from "../../types/Types";
 
 export class ThemeProvider {
 

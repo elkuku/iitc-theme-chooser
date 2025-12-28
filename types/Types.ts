@@ -15,3 +15,9 @@ declare global {
         }
     }
 }
+
+export interface Theme {
+    name: string,
+    css: string,
+    preview: string,
+}
