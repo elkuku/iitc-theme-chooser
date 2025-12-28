@@ -22,7 +22,6 @@ export class DialogHelper {
             throw new Error(`${this.pluginName} - Handlebars helper not found`)
         }
 
-        // @ts-expect-error 'howtodeclaretypes?'
         this.handlebars.registerHelper({
             if_eq:(arg1:string, arg2:string, options: Handlebars.HelperOptions) => {
                 return (arg1 === arg2) ? options.fn(this) : options.inverse(this);
@@ -47,9 +46,5 @@ export class DialogHelper {
             height: 'auto',
             buttons: [],
         }).parent()
-    }
-
-    async updateDialog() {
-        console.info('DialogHelper.updateDialog()')
     }
 }

@@ -1,7 +1,7 @@
 
 export interface HelperHandlebars {
     compile: (templateString: any) => Handlebars.TemplateDelegate
-    registerHelper: (name: string, function_: Handlebars.HelperDelegate) => void
+    registerHelper: (name: Handlebars.HelperDeclareSpec) => void
 }
 
 declare global {

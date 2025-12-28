@@ -13,7 +13,7 @@ class ThemeChooser implements Plugin.Class {
 
     private themeProvider: ThemeProvider
     private dialogHelper: DialogHelper
-    private dialog: JQuery | undefined
+    private dialog?: JQuery
     private settings: Settings
 
     private defaultSettings = {
@@ -34,27 +34,27 @@ class ThemeChooser implements Plugin.Class {
             this.settings = JSON.parse(settings)
         }
 
-        this.themeProvider = new ThemeProvider()
+        this.themeProvider = new ThemeProvider
         this.dialogHelper = new DialogHelper(PLUGIN_NAME, 'Theme Chooser', this.settings.theme, this.themeProvider.getList())
 
         this.createButtons()
         this.addHooks()
     }
 
-    public activateTheme(themeName = '') {
-        if (themeName === '') {
-            themeName = this.settings.theme;
-            console.log(`ThemeChooser | Activating theme: ${themeName}`);
+    public activateTheme(name = '') {
+        if (name === '') {
+            name = this.settings.theme;
+            console.log(`ThemeChooser | Activating theme: ${name}`);
         } else {
-            console.log(`ThemeChooser | Switching to: ${themeName}`);
-            this.settings.theme = themeName;
+            console.log(`ThemeChooser | Switching to: ${name}`);
+            this.settings.theme = name;
             localStorage.setItem(KEY_STORAGE, JSON.stringify(this.settings));
         }
 
         const element = document.getElementById('themeChooser')
 
         if (element) {
-            const theme = this.themeProvider.getTheme(themeName)
+            const theme = this.themeProvider.getTheme(name)
 
             element.innerHTML = theme.css
         }
@@ -80,15 +80,11 @@ class ThemeChooser implements Plugin.Class {
     }
 
     private showDialog = async (): Promise<void> => {
-        if (!this.dialog) {
-            this.dialog = this.dialogHelper.getDialog()
-            this.dialog.on('dialogclose', () => {
-                this.dialog = undefined
-            })
+        if (this.dialog) return
 
-            await this.dialogHelper.updateDialog()
-        }
+        this.dialog = this.dialogHelper.getDialog()
+        this.dialog.on('dialogclose', () => { this.dialog = undefined })
     }
 }
 
-Plugin.Register(new ThemeChooser(), 'ThemeChooser');
+Plugin.Register(new ThemeChooser, 'ThemeChooser');
