@@ -42,19 +42,18 @@ Variant and options can be set at runtime using the plugin UI.
 ```
 ─ themes
    └── yourTheme
-       ├── meta.json
-       ├── main.css
-       ├── additional.css
        ├── options
        │   ├── option-one.css
        │   └── option-two.css
-       └── variants
-           ├── blue.css
-           ├── green.css
-           └── red.css
-
+       ├── variants
+       │   ├── blue.css
+       │   ├── green.css
+       │   └── red.css
+       ├── main.css
+       ├── other.css
+       ├── even-more.css (...)
+       └── meta.json
 ```
-
 
 ----
 
