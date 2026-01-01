@@ -27,13 +27,32 @@ Create a `main.css` file with the CSS code of your theme.
 
 You can create additional CSS files that will be included after the main CSS file.
 
+#### Variants
+
+You can optionally define two or more variants (CSS variables) that will be rendered at he beginning.
+
+#### Options
+
+You can define one ore more options (arbitrary CSS code) that will be rendered at the end.
+
+### File structure
+
 ```
 ─ themes
    └── yourTheme
        ├── meta.json
        ├── main.css
-       └── additional.css
+       ├── additional.css
+       ├── options
+       │   ├── option-one.css
+       │   └── option-two.css
+       └── variants
+           ├── blue.css
+           ├── green.css
+           └── red.css
+
 ```
+
 
 ----
 
