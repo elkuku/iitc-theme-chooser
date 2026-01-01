@@ -1,18 +1,22 @@
 // @ts-expect-error "Import attributes are only supported when the --module option is set to esnext, nodenext, or preserve"
 import dialogTemplate from '../tpl/dialog.hbs' with {type: 'text'}
 
-import {HelperHandlebars, Theme} from "../../types/Types";
+import {HelperHandlebars, Settings} from '../../types/Types'
+import {ThemeProvider} from './ThemeProvider'
 
 export class DialogHelper {
 
     private handlebars: HelperHandlebars
 
+    private themeProvider: ThemeProvider
+
     public constructor(
         private pluginName: string,
         private title: string,
-        private activeTheme: string,
-        private themes:Record<string, Theme>,
-    ) {}
+        private settings: Settings,
+    ) {
+        this.themeProvider = new ThemeProvider
+    }
 
     public getDialog(): JQuery {
         this.handlebars = window.plugin.HelperHandlebars
@@ -23,19 +27,22 @@ export class DialogHelper {
         }
 
         this.handlebars.registerHelper({
-            if_eq:(arg1:string, arg2:string, options: Handlebars.HelperOptions) => {
-                return (arg1 === arg2) ? options.fn(this) : options.inverse(this);
-            }
+            if_eq: (arg1: string, arg2: string, options: Handlebars.HelperOptions) => {
+                return (arg1 === arg2) ? options.fn(this) : options.inverse(this)
+            },
+            title: (str: string) => {
+                return this.formatTitle(str)
+            },
         })
 
-        const template: Handlebars.TemplateDelegate = this.handlebars.compile(dialogTemplate)
+        const template = this.handlebars.compile(dialogTemplate)
 
         const data = {
             plugin: 'window.plugin.' + this.pluginName,
+            pluginVersion: VERSION,
             prefix: this.pluginName,
-            activeTheme: this.activeTheme,
-            themes: this.themes,
-            playerName: window.PLAYER.nickname // @TODO remove?
+            settings: this.settings,
+            themes: this.themeProvider.getList(),
         }
 
         return window.dialog({
@@ -46,5 +53,65 @@ export class DialogHelper {
             height: 'auto',
             buttons: [],
         }).parent()
+    }
+
+    public showTheme(settings: Settings) {
+        this.settings = settings
+
+        console.log('showTheme', settings)
+
+        const theme = this.themeProvider.getTheme(settings.theme)
+
+        let variantCss = '', optionsCss = ''
+
+        if (settings.variant) {
+            variantCss = theme.variants[settings.variant]
+        }
+
+        if (settings.options) {
+            for (const option of settings.options) {
+                optionsCss += theme.options[option]
+            }
+        }
+
+        let css = variantCss + theme.css + optionsCss
+
+        const element = document.getElementById(this.pluginName)
+
+        if (element) element.innerHTML = css
+    }
+
+    public updateOptions() {
+        const theme = this.themeProvider.getTheme(this.settings.theme)
+        console.log('updateOptions', this.settings, theme)
+
+        let variants: string[] = []
+        Object.keys(theme.variants).forEach(key => {
+            variants.push('<label><input type="radio" name="themeVariant"'
+                + ` onchange="window.plugin.${this.pluginName}.setVariant('${key}')">`
+                + this.formatTitle(key) + '</label><br>'
+            )
+        })
+
+        let options: string[] = []
+        Object.keys(theme.options).forEach(key => {
+            options.push('<label><input type="checkbox"'
+                + ` onchange="window.plugin.${this.pluginName}.setOption('${key}', this.checked)">`
+                + this.formatTitle(key) + '</label><br>'
+            )
+        })
+
+        const variantsElement = document.getElementById(`${this.pluginName}ThemeVariants`)
+        const optionsElement = document.getElementById(`${this.pluginName}ThemeOptions`)
+
+        if (variantsElement) variantsElement.innerHTML = variants.length ? variants.join('\n') : 'none'
+        if (optionsElement) optionsElement.innerHTML = options.length ? options.join('\n') : 'none'
+    }
+
+    private formatTitle(str: string) {
+        if (!str) return str
+
+        const normalized = str.replace(/-+/g, ' ')
+        return normalized.charAt(0).toUpperCase() + normalized.slice(1)
     }
 }

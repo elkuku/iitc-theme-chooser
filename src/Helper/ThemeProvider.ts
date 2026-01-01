@@ -3,7 +3,7 @@
 // @ts-ignore
 import themes from '../../build/themes.json'
 
-import {Theme} from "../../types/Types";
+import {Theme} from '../../types/Types'
 
 export class ThemeProvider {
 
@@ -11,7 +11,7 @@ export class ThemeProvider {
         return themes[name] as Theme
     }
 
-    public getList():Record<string, Theme> {
+    public getList(): Record<string, Theme> {
         return themes
     }
 }

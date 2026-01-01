@@ -1,19 +1,68 @@
-<div id="menuTabThemes">
-    Welcome {{playerName}}!<br>
-    Choose theme that you like
-    <fieldset>
-        <legend>Available themes</legend>
-        {{#each themes}}
+<div id="{{prefix}}JqueryTabs">
+
+    <ul>
+        <li><a href="#{{prefix}}tab-1">Themes</a></li>
+        <li><a href="#{{prefix}}tab-2">Options</a></li>
+        <li><a href="#{{prefix}}tab-3">Info</a></li>
+    </ul>
+
+    <div id="{{prefix}}tab-1">
+        <table>
+            <thead>
+            <tr>
+                <td>Theme</td>
+                <td>Settings</td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    {{#each themes}}
+                        <div>
+                            <label>
+                                <input type="radio" name="theme"
+                                       onchange="{{../plugin}}.switchTheme('{{@key}}')"
+                                       {{#if_eq @key ../settings.theme}}checked{{/if_eq}}
+                                />
+                                <img style="width:100px" src="{{this.preview}}" alt="Preview">
+                                {{this.name}}
+                            </label>
+                        </div>
+                    {{/each}}
+                </td>
+                <td>
+                    <fieldset>
+                        <legend>Variants</legend>
+                        <div id="{{prefix}}ThemeVariants"></div>
+                    </fieldset>
+                    <fieldset>
+                        <legend>Options</legend>
+                        <div id="{{prefix}}ThemeOptions"></div>
+                    </fieldset>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div id="{{prefix}}tab-2">
+        These do not have any effect, yet
+        <fieldset>
+            <legend>Available options</legend>
             <div>
-                <label>
-                    <input type="radio" name="theme"
-                           onchange="{{../plugin}}.activateTheme('{{@key}}')"
-                           {{#if_eq @key ../activeTheme}}checked{{/if_eq}}
-                    />
-                    <img style="width:100px" src="{{this.preview}}" alt="Preview">
-                    {{this.name}}
-                </label>
+                <input type="checkbox" id="blur">
+                <label for="blur">Blur</label>
             </div>
-        {{/each}}
-    </fieldset>
+            <button onclick="{{plugin}}.resetSettings()">Reset settings</button>
+        </fieldset>
+    </div>
+
+    <div id="{{prefix}}tab-3">
+        ThemeChooser version - {{pluginVersion}}<br><br>
+        Authors - <span class="nickname enl">Falenone</span>
+        | <span class="nickname res">xMAXIMx</span>
+        | <span class="nickname enl">nikp3h</span><br><br>
+        Github - <a href='https://github.com/Falenone/TODO-REPO'>TODO</a>
+    </div>
+
 </div>
