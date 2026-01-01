@@ -35,6 +35,8 @@ You can optionally define two or more variants (CSS variables) that will be rend
 
 You can define one ore more options (arbitrary CSS code) that will be rendered at the end.
 
+Variant and options can be set at runtime using the plugin UI.
+
 ### File structure
 
 ```
