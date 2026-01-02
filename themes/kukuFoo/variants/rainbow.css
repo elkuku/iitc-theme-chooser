@@ -1,1 +1,5 @@
 /* rainbow variant */
+:root {
+    --background-color: #50bc2b;
+    --primary-color: #ffcd2a;
+}

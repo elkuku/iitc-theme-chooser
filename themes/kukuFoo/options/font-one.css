@@ -1,1 +1,9 @@
 /* Font One */
+#theme-chooser-test {
+    font-family: "Dancing Script", cursive;
+    font-optical-sizing: auto;
+    font-weight: 700;
+    font-style: normal;
+}
+
+@import url(https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap);
