@@ -33,7 +33,7 @@ You can optionally define two or more variants (CSS variables) that will be rend
 
 #### Options
 
-You can define one ore more options (arbitrary CSS code) that will be rendered at the end.
+You can define one or more options (arbitrary CSS code) that will be rendered at the end.
 
 Variants and options can be set at runtime using the plugin UI.
 
