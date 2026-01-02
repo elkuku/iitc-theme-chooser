@@ -29,7 +29,7 @@ You can create additional CSS files that will be included after the main CSS fil
 
 #### Variants
 
-You can optionally define two or more variants (CSS variables) that will be rendered at he beginning.
+You can optionally define two or more variants (CSS variables) that will be rendered at the beginning.
 
 #### Options
 
