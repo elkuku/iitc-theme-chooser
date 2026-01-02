@@ -10,10 +10,10 @@ Visit: [elkuku.github.io/iitc-theme-chooser](https://elkuku.github.io/iitc-theme
 
 Create a new folder in the `themes` folder for your theme.
 
-Inside that folder create a `meta.json` file containing:
+Inside that folder create a `meta.json` file containing the following keys:
 
-* A `name` key for the name being displayed to the user
-* A `preview` key with a link to a preview image
+* `name` - the name being displayed to the user
+* `preview`  - link to a preview image
 
 e.g.:
 ```json
@@ -35,24 +35,24 @@ You can optionally define two or more variants (CSS variables) that will be rend
 
 You can define one ore more options (arbitrary CSS code) that will be rendered at the end.
 
-Variant and options can be set at runtime using the plugin UI.
+Variants and options can be set at runtime using the plugin UI.
 
 ### File structure
 
 ```
 ─ themes
-   └── yourTheme
+   └── YourTheme
+       ├── variants
+       │   ├── green.css
+       │   ├── blue.css
+       │   └── red.css
        ├── options
        │   ├── option-one.css
        │   └── option-two.css
-       ├── variants
-       │   ├── blue.css
-       │   ├── green.css
-       │   └── red.css
+       ├── meta.json
        ├── main.css
-       ├── other.css
-       ├── even-more.css (...)
-       └── meta.json
+       ├── additional.css
+       └── even-more.css (...)
 ```
 
 ----
