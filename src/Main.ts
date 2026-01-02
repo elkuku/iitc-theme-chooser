@@ -91,11 +91,11 @@ class ThemeChooser implements Plugin.Class {
 
     private createButtons(): void {
         IITC.toolbox.addButton({
-            id: `btn-${PLUGIN_NAME}`,
             label: 'Themes2',
-            action: this.showDialog,
             title: 'Select a theme [t]',
-            accessKey: 't'
+            accessKey: 't',
+            id: `btn-${PLUGIN_NAME}`,
+            action: this.showDialog
         })
     }
 

@@ -74,11 +74,9 @@ export class DialogHelper {
             }
         }
 
-        let css = variantCss + theme.css + optionsCss
-
         const element = document.getElementById(this.pluginName)
 
-        if (element) element.innerHTML = css
+        if (element) element.innerHTML = variantCss + theme.css + optionsCss
     }
 
     public updateOptions() {
@@ -87,7 +85,9 @@ export class DialogHelper {
 
         let variants: string[] = []
         Object.keys(theme.variants).forEach(key => {
+            const checked = key === this.settings.variant
             variants.push('<label><input type="radio" name="themeVariant"'
+                + (checked ? 'checked' : '')
                 + ` onchange="window.plugin.${this.pluginName}.setVariant('${key}')">`
                 + this.formatTitle(key) + '</label><br>'
             )
@@ -95,7 +95,9 @@ export class DialogHelper {
 
         let options: string[] = []
         Object.keys(theme.options).forEach(key => {
+            const checked = this.settings.options.includes(key)
             options.push('<label><input type="checkbox"'
+                + (checked ? ' checked' : '')
                 + ` onchange="window.plugin.${this.pluginName}.setOption('${key}', this.checked)">`
                 + this.formatTitle(key) + '</label><br>'
             )
