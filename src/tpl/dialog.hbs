@@ -1,12 +1,6 @@
-<div id="{{prefix}}JqueryTabs">
+<div id="{{prefix}}Container">
 
     <div id="theme-chooser-test">TEST: this is just a Test...</div>
-
-    <ul>
-        <li><a href="#{{prefix}}tab-1">Themes</a></li>
-        <li><a href="#{{prefix}}tab-2">Options</a></li>
-        <li><a href="#{{prefix}}tab-3">Info</a></li>
-    </ul>
 
     <div id="{{prefix}}tab-1">
         <table>
@@ -46,25 +40,4 @@
             </tbody>
         </table>
     </div>
-
-    <div id="{{prefix}}tab-2">
-        These do not have any effect, yet
-        <fieldset>
-            <legend>Available options</legend>
-            <div>
-                <input type="checkbox" id="blur">
-                <label for="blur">Blur</label>
-            </div>
-            <button onclick="{{plugin}}.resetSettings()">Reset settings</button>
-        </fieldset>
-    </div>
-
-    <div id="{{prefix}}tab-3">
-        ThemeChooser version - {{pluginVersion}}<br><br>
-        Authors - <span class="nickname enl">Falenone</span>
-        | <span class="nickname res">xMAXIMx</span>
-        | <span class="nickname enl">nikp3h</span><br><br>
-        Github - <a href='https://github.com/Falenone/TODO-REPO'>TODO</a>
-    </div>
-
 </div>

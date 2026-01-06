@@ -16,6 +16,7 @@ export class DialogHelper {
         private settings: Settings,
     ) {
         this.themeProvider = new ThemeProvider
+        document.head.insertAdjacentHTML('beforeend', `<style id="${this.pluginName}-Style"><style>`)
     }
 
     public getDialog(): JQuery {
@@ -64,17 +65,17 @@ export class DialogHelper {
 
         let variantCss = '', optionsCss = ''
 
-        if (settings.variant) {
+        if (settings.variant && theme.variants) {
             variantCss = theme.variants[settings.variant]
         }
 
-        if (settings.options) {
+        if (settings.options && theme.options) {
             for (const option of settings.options) {
                 optionsCss += theme.options[option]
             }
         }
 
-        const element = document.getElementById(this.pluginName)
+        const element = document.getElementById(this.pluginName + '-Style')
 
         if (element) element.innerHTML = variantCss + theme.css + optionsCss
     }
@@ -84,24 +85,28 @@ export class DialogHelper {
         console.log('updateOptions', this.settings, theme)
 
         let variants: string[] = []
-        Object.keys(theme.variants).forEach(key => {
-            const checked = key === this.settings.variant
-            variants.push('<label><input type="radio" name="themeVariant"'
-                + (checked ? 'checked' : '')
-                + ` onchange="window.plugin.${this.pluginName}.setVariant('${key}')">`
-                + this.formatTitle(key) + '</label><br>'
-            )
-        })
+        if (theme.variants) {
+            Object.keys(theme.variants).forEach(key => {
+                const checked = key === this.settings.variant
+                variants.push('<label><input type="radio" name="themeVariant"'
+                    + (checked ? 'checked' : '')
+                    + ` onchange="window.plugin.${this.pluginName}.setVariant('${key}')">`
+                    + this.formatTitle(key) + '</label><br>'
+                )
+            })
+        }
 
         let options: string[] = []
-        Object.keys(theme.options).forEach(key => {
-            const checked = this.settings.options.includes(key)
-            options.push('<label><input type="checkbox"'
-                + (checked ? ' checked' : '')
-                + ` onchange="window.plugin.${this.pluginName}.setOption('${key}', this.checked)">`
-                + this.formatTitle(key) + '</label><br>'
-            )
-        })
+        if (theme.options) {
+            Object.keys(theme.options).forEach(key => {
+                const checked = this.settings.options.includes(key)
+                options.push('<label><input type="checkbox"'
+                    + (checked ? ' checked' : '')
+                    + ` onchange="window.plugin.${this.pluginName}.setOption('${key}', this.checked)">`
+                    + this.formatTitle(key) + '</label><br>'
+                )
+            })
+        }
 
         const variantsElement = document.getElementById(`${this.pluginName}ThemeVariants`)
         const optionsElement = document.getElementById(`${this.pluginName}ThemeOptions`)
@@ -111,7 +116,7 @@ export class DialogHelper {
     }
 
     private formatTitle(str: string) {
-        if (!str) return str
+        if ('' === str) return str
 
         const normalized = str.replace(/-+/g, ' ')
         return normalized.charAt(0).toUpperCase() + normalized.slice(1)

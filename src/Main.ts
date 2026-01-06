@@ -21,19 +21,8 @@ class ThemeChooser implements Plugin.Class {
     private settings: Settings
 
     init() {
-        console.log(`ThemeChooser ${VERSION}`)
-
-        const settings = localStorage.getItem(KEY_STORAGE)
-
-        if (null === settings) {
-            this.settings = structuredClone(defaultSettings)
-            localStorage.setItem(KEY_STORAGE, JSON.stringify(this.settings))
-        } else {
-            this.settings = JSON.parse(settings)
-        }
-
-        this.dialogHelper = new DialogHelper(PLUGIN_NAME, 'Theme Chooser', this.settings)
-
+        console.log(`${PLUGIN_NAME} ${VERSION}`)
+        this.loadSettings()
         this.createButtons()
         this.addHooks()
     }
@@ -79,9 +68,20 @@ class ThemeChooser implements Plugin.Class {
         }
     }
 
+    private loadSettings() {
+        const settings = localStorage.getItem(KEY_STORAGE)
+
+        if (null === settings) {
+            this.settings = structuredClone(defaultSettings)
+            localStorage.setItem(KEY_STORAGE, JSON.stringify(this.settings))
+        } else {
+            this.settings = JSON.parse(settings)
+        }
+    }
+
     private onIitcLoaded = () => {
         console.log(`${PLUGIN_NAME} | Activating theme: ${this.settings.theme}`)
-        document.head.insertAdjacentHTML('beforeend', `<style id="${PLUGIN_NAME}"><style>`)
+        this.dialogHelper = new DialogHelper(PLUGIN_NAME, 'Theme Chooser', this.settings)
         this.dialogHelper.showTheme(this.settings)
     }
 
@@ -104,9 +104,6 @@ class ThemeChooser implements Plugin.Class {
 
         this.dialog = this.dialogHelper.getDialog()
         this.dialog.on('dialogclose', () => { this.dialog = undefined })
-
-        // Init jquery tabs
-        $(`#${PLUGIN_NAME}JqueryTabs`).tabs()
 
         this.dialogHelper.updateOptions()
     }
