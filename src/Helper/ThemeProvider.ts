@@ -1,8 +1,3 @@
-// NOTE: The `themes.json` file does not exist in the repository.
-// It is generated using the `scripts/create-theme-file.js` script
-// @ts-ignore
-import themes from '../../build/themes.json'
-
 import {Theme} from '../../types/Types'
 
 export class ThemeProvider {
@@ -10,7 +5,7 @@ export class ThemeProvider {
     private themes: Record<string, Theme> = {}
 
     public constructor() {
-        this.themes['default'] = {
+        this.themes.default = {
             'name': 'Default IITC',
             'css': '/* Default IITC */',
             'preview': 'https://github.com/Falenone/Blurtheme/blob/main/images/prev-default.png?raw=true'
