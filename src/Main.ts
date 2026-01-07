@@ -41,7 +41,9 @@ class ThemeChooser implements Plugin.Class {
     public setVariant(name: string) {
         console.log('set variant', name)
         this.settings.variant = name
+
         this.storeSettings()
+
         this.dialogHelper.showTheme(this.settings)
     }
 
@@ -58,14 +60,10 @@ class ThemeChooser implements Plugin.Class {
                 this.settings.options.splice(index, 1)
             }
         }
-        this.storeSettings()
-        this.dialogHelper.showTheme(this.settings)
-    }
 
-    public resetSettings = () => {
-        if (confirm('Are you sure about that?')) {
-            alert('reset settings (soon)')
-        }
+        this.storeSettings()
+
+        this.dialogHelper.showTheme(this.settings)
     }
 
     private loadSettings() {
