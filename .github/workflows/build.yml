@@ -17,9 +17,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Create the themes.json file
-        run: node scripts/create-themes-file.js
-
       - name: Setup Node.js environment
         uses: actions/setup-node@v4
         with:
@@ -33,7 +30,7 @@ jobs:
         run: yarn build:prod
 
       - name: Setup GitHub page
-        run: node scripts/setup-github-page.js
+        run: node .github/scripts/setup-github-page.js
 
       - name: Upload build artifact to pages
         uses: actions/upload-pages-artifact@v3
