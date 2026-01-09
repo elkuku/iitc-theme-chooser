@@ -8,7 +8,7 @@ export class ThemeProvider {
         this.themes.default = {
             'name': 'Default IITC',
             'css': '/* Default IITC */',
-            'preview': 'https://github.com/Falenone/Blurtheme/blob/main/images/prev-default.png?raw=true'
+            'preview': 'https://elkuku.github.io/iitc-theme-chooser/preview-default.png'
         }
 
         Object.keys(window.plugin).forEach((value) => {
