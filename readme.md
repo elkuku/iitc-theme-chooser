@@ -6,7 +6,7 @@ A theme chooser for IITC.
 
 First install the required helper plugin:
 
-* [Template Helper](https://elkuku.github.io/iitc-kuku-helper-handlebars/files/iitc_plugin_helper_handlebars.user.js)
+* [Template Helper](https://elkuku.github.io/iitc-kuku-helper-handlebars/files/iitc_plugin_helper_handlebars.user.js) ([Communit plugin site](https://iitc.app/community_plugins#helper-handlebars-by-elkuku))
 
 Then install the [Theme Chooser](https://elkuku.github.io/iitc-theme-chooser/)
 
