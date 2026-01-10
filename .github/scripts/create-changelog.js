@@ -1,8 +1,10 @@
 #!/usr/bin/env node
 
 import {execSync} from 'node:child_process'
-import {writeFileSync} from 'node:fs'
 import {resolve} from 'node:path'
+import fs from 'fs'
+
+if (!fs.existsSync('build')) fs.mkdirSync('build')
 
 function getTags() {
 
@@ -36,7 +38,7 @@ function getTags() {
 
 function writeJsonFile(data, filename = 'build/changelog.json') {
     const filePath = resolve(process.cwd(), filename)
-    writeFileSync(filePath, JSON.stringify(data, null, 2), 'utf8')
+    fs.writeFileSync(filePath, JSON.stringify(data, null, 2), 'utf8')
     console.log(`changelog written to ${filePath}`)
 }
 
