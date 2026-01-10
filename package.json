@@ -8,6 +8,9 @@
     "build": "yarn build:dev",
     "build:dev": "yarn ipk build:dev",
     "build:prod": "yarn ipk build:prod",
+    "build:changelog": "node .github/scripts/create-changelog.js",
+    "build:all": "yarn build:changelog && yarn ipk build:prod",
+    "build:alldev": "yarn build:changelog && yarn ipk build:dev",
     "start": "yarn ipk fileserver",
     "autobuild": "yarn ipk autobuild"
   },

@@ -9,6 +9,10 @@ on:
   push:
   workflow_dispatch:
 
+concurrency:
+  group: main-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -16,19 +20,69 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Setup Node.js environment
         uses: actions/setup-node@v4
         with:
-          node-version: '20.x'
+          node-version: 20
           cache: 'yarn'
 
-      - name: Install dependencies
-        run: yarn install --immutable --frozen-lockfile
+      # -------------------------------
+      # Build latest commit (HEAD)
+      # -------------------------------
 
-      - name: Run build
-        run: yarn build:prod
+      - name: Build HEAD
+        run: |
+          yarn install --immutable --frozen-lockfile
+          yarn build:alldev
+          mkdir -p build/dev
+          cp -r dist/* build/dev/
 
+        # -------------------------------
+        # Detect latest tag (if any)
+        # -------------------------------
+
+      - name: Detect latest tag
+        id: tag_check
+        run: TAG=$(git tag --sort=-v:refname | head -n 1 || true)
+          
+          echo "tag=$TAG";
+          
+          if [ -z "$TAG" ]; then
+          echo "has_tag=false" >> "$GITHUB_OUTPUT";
+          else
+          echo "has_tag=true" >> "$GITHUB_OUTPUT";
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT";
+          fi
+
+      # -------------------------------
+      # Checkout latest tag
+      # -------------------------------
+      - name: Checkout latest tag
+        if: steps.tag_check.outputs.has_tag == 'true'
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ steps.tag_check.outputs.tag }}
+          path: tagged
+          fetch-depth: 0
+
+      # -------------------------------
+      # Build latest tag
+      # -------------------------------
+      - name: Build latest tag
+        if: steps.tag_check.outputs.has_tag == 'true'
+        working-directory: tagged
+        run: |
+          yarn install --immutable --frozen-lockfile
+          yarn build:all
+          mkdir -p ../build/release
+          cp -r dist/* ../build/release/
+
+      # -------------------------------
+      # Build GitHub page
+      # -------------------------------
       - name: Setup GitHub page
         run: node .github/scripts/setup-github-page.js
 
