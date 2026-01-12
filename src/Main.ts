@@ -68,6 +68,16 @@ class ThemeChooser implements Plugin.Class {
         this.dialogHelper.showTheme(this.settings)
     }
 
+    private addHooks() {
+        window.addHook('iitcLoaded', this.onIitcLoaded)
+    }
+
+    private onIitcLoaded = () => {
+        console.log(`${PLUGIN_NAME} | Activating theme: ${this.settings.theme}`)
+        this.dialogHelper = new DialogHelper(PLUGIN_NAME, 'Theme Chooser', this.settings)
+        this.dialogHelper.showTheme(this.settings)
+    }
+
     private loadSettings() {
         const settings = localStorage.getItem(KEY_STORAGE)
 
@@ -79,14 +89,8 @@ class ThemeChooser implements Plugin.Class {
         }
     }
 
-    private onIitcLoaded = () => {
-        console.log(`${PLUGIN_NAME} | Activating theme: ${this.settings.theme}`)
-        this.dialogHelper = new DialogHelper(PLUGIN_NAME, 'Theme Chooser', this.settings)
-        this.dialogHelper.showTheme(this.settings)
-    }
-
-    private addHooks() {
-        window.addHook('iitcLoaded', this.onIitcLoaded)
+    private storeSettings() {
+        localStorage.setItem(KEY_STORAGE, JSON.stringify(this.settings))
     }
 
     private createButtons(): void {
@@ -106,10 +110,6 @@ class ThemeChooser implements Plugin.Class {
         this.dialog.on('dialogclose', () => { this.dialog = undefined })
 
         this.dialogHelper.updateOptions()
-    }
-
-    private storeSettings() {
-        localStorage.setItem(KEY_STORAGE, JSON.stringify(this.settings))
     }
 }
 

@@ -1,41 +1,43 @@
 <div id="{{prefix}}Container">
 
-    <div id="{{prefix}}tab-1">
-        <table>
-            <thead>
-            <tr>
-                <td>Theme</td>
-                <td>Settings</td>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td>
-                    {{#each themes}}
-                        <div>
-                            <label>
-                                <input type="radio" name="theme"
-                                       onchange="{{../plugin}}.switchTheme('{{@key}}')"
-                                       {{#if_eq @key ../settings.theme}}checked{{/if_eq}}
-                                />
-                                <img style="width:100px" src="{{this.preview}}" alt="Preview">
-                                {{this.name}}
-                            </label>
-                        </div>
-                    {{/each}}
-                </td>
-                <td>
-                    <fieldset>
-                        <legend>Variants</legend>
-                        <div id="{{prefix}}ThemeVariants"></div>
-                    </fieldset>
-                    <fieldset>
-                        <legend>Options</legend>
-                        <div id="{{prefix}}ThemeOptions"></div>
-                    </fieldset>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
+    <table>
+        <thead>
+        <tr>
+            <td>Theme</td>
+            <td>Settings</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>
+                {{#each themes}}
+                    <div>
+                        <label>
+                            <input type="radio" name="theme"
+                                   onchange="{{../plugin}}.switchTheme('{{@key}}')"
+                                   {{#if_eq @key ../settings.theme}}checked{{/if_eq}}
+                            />
+                            <img style="width:100px" src="{{this.preview}}" alt="Preview">
+                            {{this.name}}
+                        </label>
+                    </div>
+                {{/each}}
+            </td>
+            <td>
+                <fieldset>
+                    <legend>Variants</legend>
+                    <div id="{{prefix}}ThemeVariants"></div>
+                </fieldset>
+                <fieldset>
+                    <legend>Options</legend>
+                    <div id="{{prefix}}ThemeOptions"></div>
+                </fieldset>
+                <fieldset>
+                    <legend>Info</legend>
+                    <div id="{{prefix}}ThemeInfo"></div>
+                </fieldset>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 </div>

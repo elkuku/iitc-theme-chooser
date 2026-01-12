@@ -24,6 +24,19 @@ export interface Theme {
     options?: Record<string, string>,
 }
 
+export interface ThemeInfo {
+    name: string,
+    preview: string,
+    variants?: string[],
+    options?: string[],
+}
+
+export interface Info {
+    name: string,
+    author: string,
+    version: string,
+}
+
 export interface Settings {
     theme: string
     variant: string

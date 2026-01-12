@@ -115,11 +115,24 @@ export class DialogHelper {
             })
         }
 
+        const info = this.themeProvider.getInfo(this.settings.theme)
+        let infoHtml = ''
+
+        console.log('updateOptions - INFO2', info)
+
+        if (info) {
+            infoHtml = '<li>Author: ' + info.author + '</li>'
+
+            infoHtml = '<ul>' + infoHtml + '</ul>'
+        }
+
         const variantsElement = document.getElementById(`${this.pluginName}ThemeVariants`)
         const optionsElement = document.getElementById(`${this.pluginName}ThemeOptions`)
+        const infoElement = document.getElementById(`${this.pluginName}ThemeInfo`)
 
         if (variantsElement) variantsElement.innerHTML = variants.length ? variants.join('\n') : 'none'
         if (optionsElement) optionsElement.innerHTML = options.length ? options.join('\n') : 'none'
+        if (infoElement) infoElement.innerHTML = infoHtml
     }
 
     private formatTitle(str: string) {
