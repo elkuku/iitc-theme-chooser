@@ -48,6 +48,10 @@ export class ThemeProvider {
     }
 
     public getInfo(name: string): Info | null {
+        if ('default' === name) {
+            return null
+        }
+
         // @ts-ignore
         const plugin = window.plugin[name]
 
