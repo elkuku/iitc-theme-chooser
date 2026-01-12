@@ -59,14 +59,21 @@ export class DialogHelper {
     public showTheme(settings: Settings) {
         this.settings = settings
 
-        console.log('showTheme', settings)
-
         const theme = this.themeProvider.getTheme(settings.theme)
 
         let variantCss = '', optionsCss = ''
 
-        if (settings.variant && theme.variants) {
-            variantCss = theme.variants[settings.variant]
+        // @ts-ignore
+        if (theme.variants && Object.keys(theme.variants).length !== 0) {
+            if (settings.variant) {
+                variantCss = theme.variants[settings.variant]
+            } else {
+                const keys = Object.keys(theme.variants);
+                const firstKey = keys[0];
+                // @ts-ignore
+                window.plugin[this.pluginName].setVariant(firstKey, false)
+                variantCss = theme.variants[firstKey]
+            }
         }
 
         if (settings.options && theme.options) {

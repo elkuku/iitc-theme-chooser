@@ -38,13 +38,15 @@ class ThemeChooser implements Plugin.Class {
         this.dialogHelper.updateOptions()
     }
 
-    public setVariant(name: string) {
+    public setVariant(name: string, update = true) {
         console.log('set variant', name)
         this.settings.variant = name
 
         this.storeSettings()
 
-        this.dialogHelper.showTheme(this.settings)
+        if (update) {
+            this.dialogHelper.showTheme(this.settings)
+        }
     }
 
     public setOption(name: string, value: boolean) {

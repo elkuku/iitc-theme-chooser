@@ -8,6 +8,8 @@ export class ThemeProvider {
         this.themes.default = {
             'name': 'Default IITC',
             'css': '/* Default IITC */',
+            'variants': {},
+            'options': {},
             'preview': 'https://elkuku.github.io/iitc-theme-chooser/preview-default.png'
         }
 
