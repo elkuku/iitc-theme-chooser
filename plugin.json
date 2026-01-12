@@ -1,10 +1,10 @@
 {
-  "name": "IITC plugin: Theme-Chooser",
-  "id": "iitc_plugin_ThemeChooser",
+  "name": "IITC plugin: KuKuThemeChooser",
+  "id": "iitc_plugin_KuKuThemeChooser",
   "category": "Themes",
   "description": "A theme chooser for IITC",
   "author": "elkuku",
   "entry": "src/Main.ts",
   "minimize": false,
-  "downloadURL": "https://elkuku.github.io/iitc-theme-chooser/files/iitc_plugin_ThemeChooser.user.js"
+  "downloadURL": "https://elkuku.github.io/iitc-theme-chooser/files/release/iitc_plugin_KuKuThemeChooser.user.js"
 }

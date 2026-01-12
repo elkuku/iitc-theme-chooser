@@ -68,8 +68,8 @@ export class DialogHelper {
             if (settings.variant) {
                 variantCss = theme.variants[settings.variant]
             } else {
-                const keys = Object.keys(theme.variants);
-                const firstKey = keys[0];
+                const keys = Object.keys(theme.variants)
+                const firstKey = keys[0]
                 // @ts-ignore
                 window.plugin[this.pluginName].setVariant(firstKey, false)
                 variantCss = theme.variants[firstKey]
@@ -85,6 +85,23 @@ export class DialogHelper {
         const element = document.getElementById(this.pluginName + '-Style')
 
         if (element) element.innerHTML = variantCss + theme.css + optionsCss
+
+        this.updateThemeSelection(settings.theme)
+    }
+
+    private updateThemeSelection(targetValue: string) {
+        const container = document.getElementById(this.pluginName + '-ThemeList')
+        if (!container) return
+
+        const items = container.querySelectorAll('div')
+
+        items.forEach(div => {
+            if (div.dataset.for === targetValue) {
+                div.classList.add('selected')
+            } else {
+                div.classList.remove('selected')
+            }
+        })
     }
 
     public updateOptions() {
@@ -123,9 +140,9 @@ export class DialogHelper {
             infoHtml = '<ul>' + infoHtml + '</ul>'
         }
 
-        const variantsElement = document.getElementById(`${this.pluginName}ThemeVariants`)
-        const optionsElement = document.getElementById(`${this.pluginName}ThemeOptions`)
-        const infoElement = document.getElementById(`${this.pluginName}ThemeInfo`)
+        const variantsElement = document.getElementById(`${this.pluginName}-ThemeVariants`)
+        const optionsElement = document.getElementById(`${this.pluginName}-ThemeOptions`)
+        const infoElement = document.getElementById(`${this.pluginName}-ThemeInfo`)
 
         if (variantsElement) variantsElement.innerHTML = variants.length ? variants.join('\n') : 'none'
         if (optionsElement) optionsElement.innerHTML = options.length ? options.join('\n') : 'none'

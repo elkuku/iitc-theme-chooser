@@ -3,7 +3,7 @@ import * as Plugin from 'iitcpluginkit'
 import {DialogHelper} from './Helper/Dialog'
 import {Settings} from '../types/Types'
 
-const PLUGIN_NAME = 'ThemeChooser'
+const PLUGIN_NAME = 'KuKuThemeChooser'
 const KEY_STORAGE = 'theme-chooser'
 
 const defaultSettings: Settings = {
@@ -12,7 +12,7 @@ const defaultSettings: Settings = {
     'options': [],
 }
 
-class ThemeChooser implements Plugin.Class {
+class Main implements Plugin.Class {
 
     private dialogHelper: DialogHelper
 
@@ -22,6 +22,10 @@ class ThemeChooser implements Plugin.Class {
 
     init() {
         console.log(`${PLUGIN_NAME} ${VERSION}`)
+
+        // eslint-disable-next-line @typescript-eslint/no-require-imports
+        require('./styles.css');
+
         this.loadSettings()
         this.createButtons()
         this.addHooks()
@@ -71,7 +75,7 @@ class ThemeChooser implements Plugin.Class {
 
     private onIitcLoaded = () => {
         console.log(`${PLUGIN_NAME} | Activating theme: ${this.settings.theme}`)
-        this.dialogHelper = new DialogHelper(PLUGIN_NAME, 'Theme Chooser', this.settings)
+        this.dialogHelper = new DialogHelper(PLUGIN_NAME, `Theme Chooser ${VERSION}`, this.settings)
         this.dialogHelper.showTheme(this.settings)
     }
 
@@ -92,7 +96,7 @@ class ThemeChooser implements Plugin.Class {
 
     private createButtons(): void {
         IITC.toolbox.addButton({
-            label: 'Themes2',
+            label: 'Themes',
             title: 'Select a theme [t]',
             accessKey: 't',
             id: `btn-${PLUGIN_NAME}`,
@@ -110,4 +114,4 @@ class ThemeChooser implements Plugin.Class {
     }
 }
 
-Plugin.Register(new ThemeChooser, 'ThemeChooser')
+Plugin.Register(new Main, 'KuKuThemeChooser')
