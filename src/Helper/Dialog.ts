@@ -52,7 +52,7 @@ export class DialogHelper {
             html: template(data),
             width: 'auto',
             height: 'auto',
-            buttons: [],
+            //buttons: [],
         }).parent()
     }
 

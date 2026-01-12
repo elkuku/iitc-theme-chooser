@@ -1,0 +1,7 @@
+#KuKuThemeChooser-ThemeList input[type=radio]{
+    display:none
+}
+
+#KuKuThemeChooser-ThemeList div.theme-list-state.selected {
+    border: 1px solid lime;
+}
