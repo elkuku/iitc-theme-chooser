@@ -89,7 +89,6 @@ export class DialogHelper {
 
     public updateOptions() {
         const theme = this.themeProvider.getTheme(this.settings.theme)
-        console.log('updateOptions', this.settings, theme)
 
         let variants: string[] = []
         if (theme.variants) {
@@ -117,8 +116,6 @@ export class DialogHelper {
 
         const info = this.themeProvider.getInfo(this.settings.theme)
         let infoHtml = ''
-
-        console.log('updateOptions - INFO2', info)
 
         if (info) {
             infoHtml = '<li>Author: ' + info.author + '</li>'

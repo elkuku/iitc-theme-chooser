@@ -26,8 +26,6 @@ export class ThemeProvider {
                 this.themes = {...this.themes, ...newTheme}
             }
         })
-
-        console.log('ThemeProvider', this.themes)
     }
 
     public getTheme(name: string): Theme {
@@ -40,7 +38,6 @@ export class ThemeProvider {
 
         // @todo remove legacy code
         if (typeof plugin.getThemeInfo === 'function') {
-            console.warn(plugin.getThemeInfo())
             return plugin.getThemeInfo() as ThemeInfo
         } else {
             return this.getTheme(name) as ThemeInfo
@@ -57,7 +54,6 @@ export class ThemeProvider {
 
         // @todo remove legacy code
         if (typeof plugin.getInfo === 'function') {
-            console.warn(plugin.getInfo())
             return plugin.getInfo() as Info
         }
 

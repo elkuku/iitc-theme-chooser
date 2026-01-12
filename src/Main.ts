@@ -39,7 +39,6 @@ class ThemeChooser implements Plugin.Class {
     }
 
     public setVariant(name: string, update = true) {
-        console.log('set variant', name)
         this.settings.variant = name
 
         this.storeSettings()
@@ -50,8 +49,6 @@ class ThemeChooser implements Plugin.Class {
     }
 
     public setOption(name: string, value: boolean) {
-        console.log('set option', name, value)
-
         if (value) {
             if (!this.settings.options.includes(name)) {
                 this.settings.options.push(name)
