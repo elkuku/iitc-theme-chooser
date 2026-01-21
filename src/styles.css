@@ -2,6 +2,10 @@
     display:none
 }
 
+#KuKuThemeChooser-ThemeList div.theme-list-state:hover {
+    cursor: pointer;
+}
+
 #KuKuThemeChooser-ThemeList div.theme-list-state.selected {
     border: 1px solid lime;
 }

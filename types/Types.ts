@@ -33,8 +33,14 @@ export interface ThemeInfo {
 
 export interface Info {
     name: string,
+    description: string,
     author: string,
     version: string,
+}
+
+export interface Changelog {
+    name: string,
+    message: string,
 }
 
 export interface Settings {

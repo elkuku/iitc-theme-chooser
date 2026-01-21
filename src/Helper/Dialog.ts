@@ -1,20 +1,21 @@
 // @ts-expect-error "Import attributes are only supported when the --module option is set to esnext, nodenext, or preserve"
 import dialogTemplate from '../tpl/dialog.hbs' with {type: 'text'}
 
-import {HelperHandlebars, Settings} from '../../types/Types'
+import {HelperHandlebars, Settings, Theme} from '../../types/Types'
 import {ThemeProvider} from './ThemeProvider'
 
 export class DialogHelper {
 
     private handlebars: HelperHandlebars
-
     private themeProvider: ThemeProvider
+    private readonly plugin: string
 
     public constructor(
         private pluginName: string,
         private title: string,
         private settings: Settings,
     ) {
+        this.plugin = `window.plugin.${this.pluginName}`
         this.themeProvider = new ThemeProvider
         document.head.insertAdjacentHTML('beforeend', `<style id="${this.pluginName}-Style"><style>`)
     }
@@ -23,7 +24,7 @@ export class DialogHelper {
         this.handlebars = window.plugin.HelperHandlebars
 
         if (!this.handlebars) {
-            alert(`${this.pluginName} - Handlebars helper not found <br><a href="https://iitc.app/community_plugins#helper-handlebars-by-elkuku">Download</a>`)
+            alert(`${this.pluginName} - Handlebars helper not found.<br>Please <a href="https://iitc.app/community_plugins#helper-handlebars-by-elkuku">download</a> it.`)
             throw new Error(`${this.pluginName} - Handlebars helper not found`)
         }
 
@@ -39,7 +40,7 @@ export class DialogHelper {
         const template = this.handlebars.compile(dialogTemplate)
 
         const data = {
-            plugin: 'window.plugin.' + this.pluginName,
+            plugin: this.plugin,
             pluginVersion: VERSION,
             prefix: this.pluginName,
             settings: this.settings,
@@ -47,12 +48,12 @@ export class DialogHelper {
         }
 
         return window.dialog({
-            id: this.pluginName,
+            id: `dialog-${this.pluginName}`,
             title: this.title,
             html: template(data),
             width: 'auto',
             height: 'auto',
-            //buttons: [],
+            buttons: [],
         }).parent()
     }
 
@@ -107,46 +108,73 @@ export class DialogHelper {
     public updateOptions() {
         const theme = this.themeProvider.getTheme(this.settings.theme)
 
-        let variants: string[] = []
-        if (theme.variants) {
-            Object.keys(theme.variants).forEach(key => {
-                const checked = key === this.settings.variant
-                variants.push('<label><input type="radio" name="themeVariant"'
-                    + (checked ? 'checked' : '')
-                    + ` onchange="window.plugin.${this.pluginName}.setVariant('${key}')">`
-                    + this.formatTitle(key) + '</label><br>'
-                )
-            })
-        }
-
-        let options: string[] = []
-        if (theme.options) {
-            Object.keys(theme.options).forEach(key => {
-                const checked = this.settings.options.includes(key)
-                options.push('<label><input type="checkbox"'
-                    + (checked ? ' checked' : '')
-                    + ` onchange="window.plugin.${this.pluginName}.setOption('${key}', this.checked)">`
-                    + this.formatTitle(key) + '</label><br>'
-                )
-            })
-        }
-
-        const info = this.themeProvider.getInfo(this.settings.theme)
-        let infoHtml = ''
-
-        if (info) {
-            infoHtml = '<li>Author: ' + info.author + '</li>'
-
-            infoHtml = '<ul>' + infoHtml + '</ul>'
-        }
+        const variantsHtml = this.getVariantsHtml(theme)
+        const optionsHtml = this.getOptionsHtml(theme)
+        const infoHtml = this.getInfoHtml(theme)
 
         const variantsElement = document.getElementById(`${this.pluginName}-ThemeVariants`)
         const optionsElement = document.getElementById(`${this.pluginName}-ThemeOptions`)
         const infoElement = document.getElementById(`${this.pluginName}-ThemeInfo`)
 
-        if (variantsElement) variantsElement.innerHTML = variants.length ? variants.join('\n') : 'none'
-        if (optionsElement) optionsElement.innerHTML = options.length ? options.join('\n') : 'none'
+        if (variantsElement) variantsElement.innerHTML = variantsHtml.length ? variantsHtml.join('\n') : 'none'
+        if (optionsElement) optionsElement.innerHTML = optionsHtml.length ? optionsHtml.join('\n') : 'none'
         if (infoElement) infoElement.innerHTML = infoHtml
+    }
+
+    private getVariantsHtml(theme: Theme) {
+        let html: string[] = []
+
+        if (theme.variants) {
+            Object.keys(theme.variants).forEach(key => {
+                const checked = key === this.settings.variant
+                html.push('<label><input type="radio" name="themeVariant"'
+                    + (checked ? 'checked' : '')
+                    + ` onchange="${this.plugin}.setVariant('${key}')">`
+                    + this.formatTitle(key) + '</label><br>'
+                )
+            })
+        }
+
+        return html
+    }
+    private getOptionsHtml(theme: Theme) {
+        let html: string[] = []
+
+        if (theme.options) {
+            Object.keys(theme.options).forEach(key => {
+                const checked = this.settings.options.includes(key)
+                html.push('<label><input type="checkbox"'
+                    + (checked ? ' checked' : '')
+                    + ` onchange="${this.plugin}.setOption('${key}', this.checked)">`
+                    + this.formatTitle(key) + '</label><br>'
+                )
+            })
+        }
+
+        return html
+    }
+    private getInfoHtml(theme: Theme) {
+        const info = this.themeProvider.getInfo(this.settings.theme)
+        const changelog = this.themeProvider.getChangelog(this.settings.theme)
+
+        let html = ''
+
+        if (info) {
+            html += '<ul>'
+            html += ''
+            html += '<li>' + info.name + '</li>'
+            html += '<li>' + info.description + '</li>'
+            html += '<li>Version: ' + info.version + '</li>'
+            html += '<li>Author: ' + info.author + '</li>'
+
+            if (changelog.length > 0) {
+                html += `<li><a href="#" onclick="${this.plugin}.showChangelog('${this.settings.theme}')">Changelog</a></li>`
+            }
+
+            html += '</ul>'
+        }
+
+        return html
     }
 
     private formatTitle(str: string) {
@@ -154,5 +182,26 @@ export class DialogHelper {
 
         const normalized = str.replace(/-+/g, ' ')
         return normalized.charAt(0).toUpperCase() + normalized.slice(1)
+    }
+
+    public showChangelog(name: string) {
+        const changelog = this.themeProvider.getChangelog(name)
+
+        let html = ''
+
+        if (changelog.length === 0) {
+            html = 'No Changelog :('
+        } else if (changelog[0].name === 'changelog') {
+            html = `<pre>${changelog[0].message}</pre>`
+        } else {
+            html = 'todo: parse json changelog'
+        }
+
+        window.dialog({
+            id: `dialog-changelog-${this.pluginName}`,
+            title: 'Changelog',
+            modal: true,
+            html: html,
+        }).parent()
     }
 }

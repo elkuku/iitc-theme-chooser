@@ -1,4 +1,4 @@
-import {Info, Theme, ThemeInfo} from '../../types/Types'
+import {Changelog, Info, Theme, ThemeInfo} from '../../types/Types'
 
 export class ThemeProvider {
 
@@ -58,6 +58,22 @@ export class ThemeProvider {
         }
 
         return null
+    }
+
+    public getChangelog(name: string): Changelog[] {
+        if ('default' === name) {
+            return []
+        }
+
+        // @ts-ignore
+        const plugin = window.plugin[name]
+
+        // @todo remove legacy code
+        if (typeof plugin.getChangelog === 'function') {
+            return plugin.getChangelog()
+        }
+
+        return []
     }
 
     public getList2(): ThemeInfo[] {

@@ -69,6 +69,10 @@ class Main implements Plugin.Class {
         this.dialogHelper.showTheme(this.settings)
     }
 
+    public showChangelog(name: string) {
+        this.dialogHelper.showChangelog(name)
+    }
+
     private addHooks() {
         window.addHook('iitcLoaded', this.onIitcLoaded)
     }
