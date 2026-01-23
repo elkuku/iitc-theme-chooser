@@ -55,7 +55,7 @@ export class DialogHelper {
             height: 'auto',
             buttons: [],
             hide: {
-                effect: "fade",
+                effect: 'fade',
                 duration: 1000
             }
         }).parent()
@@ -67,6 +67,8 @@ export class DialogHelper {
         const theme = this.themeProvider.getTheme(settings.theme)
 
         let variantCss = '', optionsCss = ''
+
+        const importsCss = theme.imports ? theme.imports : ''
 
         // @ts-ignore
         if (theme.variants && Object.keys(theme.variants).length !== 0) {
@@ -89,7 +91,7 @@ export class DialogHelper {
 
         const element = document.getElementById(this.pluginName + '-Style')
 
-        if (element) element.innerHTML = variantCss + theme.css + optionsCss
+        if (element) element.innerHTML = importsCss + variantCss + theme.css + optionsCss
 
         this.updateThemeSelection(settings.theme)
     }
@@ -141,6 +143,7 @@ export class DialogHelper {
 
         return html
     }
+
     private getOptionsHtml(theme: Theme) {
         let html: string[] = []
 
@@ -157,6 +160,7 @@ export class DialogHelper {
 
         return html
     }
+
     private getInfoHtml(theme: Theme) {
         const info = this.themeProvider.getInfo(this.settings.theme)
         const changelog = this.themeProvider.getChangelog(this.settings.theme)

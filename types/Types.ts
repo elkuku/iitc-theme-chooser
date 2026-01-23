@@ -20,6 +20,7 @@ export interface Theme {
     name: string,
     css: string,
     preview: string,
+    imports?: string,
     variants?: Record<string, string>,
     options?: Record<string, string>,
 }
