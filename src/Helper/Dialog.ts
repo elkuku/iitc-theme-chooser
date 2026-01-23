@@ -54,6 +54,10 @@ export class DialogHelper {
             width: 'auto',
             height: 'auto',
             buttons: [],
+            hide: {
+                effect: "fade",
+                duration: 1000
+            }
         }).parent()
     }
 
