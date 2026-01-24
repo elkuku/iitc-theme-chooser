@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="h-100">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -8,9 +8,9 @@
           integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link rel="stylesheet" href="assets/styles.css"/>
 </head>
-<body>
+<body class="d-flex h-100 text-white bg-dark">
 
-<div class="container">
+<div class="d-flex w-100 h-100 p-3 mx-auto flex-column">
 
     <h1>{{PROJECT_NAME}}</h1>
 
@@ -18,29 +18,42 @@
         <em>{{PROJECT_DESCRIPTION}}</em>
     </p>
 
-    <div class="release-container">
-        Latest Version: {{PROJECT_VERSION}}
+    <div class="row">
+        <div class="col">
 
-        <ul>
-            {{RELEASE_LINKS}}
-        </ul>
+            <div class="shadow-lg p-3 mb-5 border rounded">
+                Latest Version: {{PROJECT_VERSION}}
+
+                <ul>
+                    {{RELEASE_LINKS}}
+                </ul>
+            </div>
+
+            <h3>Beta Version</h3>
+
+            Last Updated: {{LAST_UPDATED}}
+
+            <ul>
+                {{DEV_LINKS}}
+            </ul>
+
+            <h3>Changelog</h3>
+
+            <table class="changelog-table">
+                <tbody>
+                {{CHANGELOG}}
+                </tbody>
+            </table>
+
+        </div>
+        <div class="col">
+            <h2>Themes</h2>
+            <ul>
+                {{THEMES_LINKS}}
+            </ul>
+        </div>
     </div>
 
-    <h3>Beta Version</h3>
-
-    Last Updated: {{LAST_UPDATED}}
-
-    <ul>
-        {{DEV_LINKS}}
-    </ul>
-
-    <h3>Changelog</h3>
-
-    <table class="changelog-table">
-        <tbody>
-        {{CHANGELOG}}
-        </tbody>
-    </table>
 
 </div><!-- container -->
 

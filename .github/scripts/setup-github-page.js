@@ -6,7 +6,7 @@ function escapeHtml(value = '') {
     return value
         .replace(/&/g, '&amp;')
         .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;');
+        .replace(/>/g, '&gt;')
 }
 
 console.log('Generating GitHub page...')
@@ -48,9 +48,7 @@ if (metaFile) {
     version = match ? match[1].trim() : 'n/a'
 }
 
-const pluginData = JSON.parse(
-    fs.readFileSync('plugin.json', 'utf8'),
-)
+const pluginData = JSON.parse(fs.readFileSync('plugin.json', 'utf8'))
 
 let releaseLinks = []
 if (releaseFiles.length > 0) {
@@ -73,13 +71,24 @@ let template = fs.readFileSync('gh_page/index.html', 'utf8')
 const projectName = pluginData.name.replace('IITC plugin: ', '')
 
 const raw = fs.readFileSync('build/changelog.json', 'utf8')
-const tags = JSON.parse(raw);
+const tags = JSON.parse(raw)
 const changelog = tags.map(tag => `
       <tr>
         <td>${escapeHtml(tag.name)}</td>
         <td><pre class="changelog">${escapeHtml(tag.message)}</pre></td>
       </tr>
   `).join('')
+
+const themesData = JSON.parse(fs.readFileSync('themes.json', 'utf8'))
+let themesLinks=''
+//console.log(themesData)
+
+for (const theme of themesData) {
+    console.log(theme.name)
+    console.log(theme.homePage)
+    themesLinks += `<li><a href="${theme.homePage}">${theme.name}</a> </li>`
+}
+
 
 template = template.replace('{{DEV_LINKS}}', devLinks)
     .replace('{{RELEASE_LINKS}}', releaseLinks)
@@ -88,6 +97,7 @@ template = template.replace('{{DEV_LINKS}}', devLinks)
     .replaceAll('{{LAST_UPDATED}}', formattedDate)
     .replace('{{PROJECT_DESCRIPTION}}', pluginData.description)
     .replace('{{CHANGELOG}}', changelog)
+    .replace('{{THEMES_LINKS}}', themesLinks)
 
 fs.writeFileSync('gh_page/index.html', template, 'utf8')
 

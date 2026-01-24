@@ -195,7 +195,7 @@ export class DialogHelper {
     public showChangelog(name: string) {
         const changelog = this.themeProvider.getChangelog(name)
 
-        let html = ''
+        let html: string
 
         if (changelog.length === 0) {
             html = 'No Changelog :('
