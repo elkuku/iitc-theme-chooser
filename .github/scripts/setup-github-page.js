@@ -81,14 +81,10 @@ const changelog = tags.map(tag => `
 
 const themesData = JSON.parse(fs.readFileSync('themes.json', 'utf8'))
 let themesLinks=''
-//console.log(themesData)
 
 for (const theme of themesData) {
-    console.log(theme.name)
-    console.log(theme.homePage)
-    themesLinks += `<li><a href="${theme.homePage}">${theme.name}</a> </li>`
+    themesLinks += `<li><a href="${theme.homePage}">${theme.name}</a> by ${theme.author} </li>`
 }
-
 
 template = template.replace('{{DEV_LINKS}}', devLinks)
     .replace('{{RELEASE_LINKS}}', releaseLinks)
@@ -98,6 +94,8 @@ template = template.replace('{{DEV_LINKS}}', devLinks)
     .replace('{{PROJECT_DESCRIPTION}}', pluginData.description)
     .replace('{{CHANGELOG}}', changelog)
     .replace('{{THEMES_LINKS}}', themesLinks)
+    .replace('{{SOURCE_CODE_URL}}', pluginData.sourceCodeUrl)
+    .replace('{{ISSUES_URL}}', pluginData.issuesUrl)
 
 fs.writeFileSync('gh_page/index.html', template, 'utf8')
 
