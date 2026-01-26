@@ -15,6 +15,17 @@ table.changelog-table tr {
     vertical-align: top;
 }
 
+table.changelog-table td {
+    padding: 5px;
+}
+
+td.changelog-version {
+    color: orange;
+}
+td.changelog-date {
+    color: wheat;
+}
+
 pre.changelog {
     color: lime;
 }
