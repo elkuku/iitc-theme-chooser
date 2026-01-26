@@ -10,7 +10,7 @@ function getTags() {
 
     const gitCommand = [
         'git for-each-ref refs/tags',
-        '--sort=-creatordate',
+        '--sort=-taggerdate',
         '--format="%(refname:strip=2)%00%(taggerdate:format:%Y-%b-%d)%00%(contents)%00"',
     ].join(' ')
 

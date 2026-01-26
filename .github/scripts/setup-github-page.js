@@ -40,14 +40,6 @@ if (fs.existsSync('build/dev')) {
         .map(entry => entry.name)
 }
 
-const metaFile = releaseFiles.filter(fileName => fileName.endsWith('.meta.js'))[0]
-let version = 'n/a'
-if (metaFile) {
-    const meta = fs.readFileSync(`build/release/${metaFile}`, 'utf8')
-    const match = meta.match(/^\s*\/\/\s*@version\s+(.+)$/m)
-    version = match ? match[1].trim() : 'n/a'
-}
-
 const pluginData = JSON.parse(fs.readFileSync('plugin.json', 'utf8'))
 
 let releaseLinks = []
@@ -74,14 +66,28 @@ const raw = fs.readFileSync('build/changelog.json', 'utf8')
 const tags = JSON.parse(raw)
 const changelog = tags.map(tag => `
       <tr>
-        <td class="changelog-version">${escapeHtml(tag.name)}</td>
-        <td class="changelog-date">${escapeHtml(tag.date)}</td>
+        <td class="badge text-bg-primary">${escapeHtml(tag.name)}</td>
+        <td class="badge text-bg-secondary">${escapeHtml(tag.date)}</td>
         <td><pre class="changelog">${escapeHtml(tag.message)}</pre></td>
       </tr>
   `).join('')
 
+let version = 'n/a', releaseDate = 'n/a'
+
+if (tags[0]) {
+    version = tags[0].name
+    releaseDate = tags[0].date
+} else {
+    const metaFile = releaseFiles.filter(fileName => fileName.endsWith('.meta.js'))[0]
+    if (metaFile) {
+        const meta = fs.readFileSync(`build/release/${metaFile}`, 'utf8')
+        const match = meta.match(/^\s*\/\/\s*@version\s+(.+)$/m)
+        version = match ? match[1].trim() : 'n/a'
+    }
+}
+
 const themesData = JSON.parse(fs.readFileSync('themes.json', 'utf8'))
-let themesLinks=''
+let themesLinks = ''
 
 for (const theme of themesData) {
     themesLinks += `<li><a href="${theme.homePage}">${theme.name}</a> by ${theme.author} </li>`
@@ -91,6 +97,7 @@ template = template.replace('{{DEV_LINKS}}', devLinks)
     .replace('{{RELEASE_LINKS}}', releaseLinks)
     .replaceAll('{{PROJECT_NAME}}', projectName)
     .replaceAll('{{PROJECT_VERSION}}', version)
+    .replaceAll('{{RELEASE_DATE}}', releaseDate)
     .replaceAll('{{LAST_UPDATED}}', formattedDate)
     .replace('{{PROJECT_DESCRIPTION}}', pluginData.description)
     .replace('{{CHANGELOG}}', changelog)
